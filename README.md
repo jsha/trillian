@@ -193,6 +193,7 @@ go generate -x ./...  # hunts for //go:generate comments and runs them
 
 The Trillian codebase vendors all of its dependencies using `dep`.
 
+
 ### Running Codebase Checks
 
 The [`scripts/presubmit.sh`](scripts/presubmit.sh) script runs various tools
