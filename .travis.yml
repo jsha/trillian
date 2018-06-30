@@ -42,7 +42,8 @@ install:
   - git clone -b v3.3.7 https://github.com/coreos/etcd.git "$GOPATH/src/github.com/coreos/etcd"
   # googleapis is not Go code, but it's required for .pb.go regeneration because of API dependencies.
   - git clone --depth=1 https://github.com/googleapis/googleapis.git "$GOPATH/src/github.com/googleapis/googleapis"
-  - go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+  - |
+    go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
            github.com/coreos/etcd/cmd/etcd \
            github.com/coreos/etcd/cmd/etcdctl \
            github.com/golang/protobuf/proto \
