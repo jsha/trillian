@@ -39,11 +39,18 @@ install:
   # check out a specific tag, and then use `go get` to install the binary
   # because it handles transitively fetching dependencies.
   - git clone -b v1.3 https://github.com/grpc-ecosystem/grpc-gateway ${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway
-  - go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
   - git clone -b v3.3.7 https://github.com/coreos/etcd.git "$GOPATH/src/github.com/coreos/etcd"
-  - go get github.com/coreos/etcd/cmd/etcd
-  - go get github.com/coreos/etcd/cmd/etcdctl
-
+  # googleapis is not Go code, but it's required for .pb.go regeneration because of API dependencies.
+  - git clone --depth=1 https://github.com/googleapis/googleapis.git "$GOPATH/src/github.com/googleapis/googleapis"
+  - go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+           github.com/coreos/etcd/cmd/etcd \
+           github.com/coreos/etcd/cmd/etcdctl \
+           github.com/golang/protobuf/proto \
+           github.com/golang/protobuf/protoc-gen-go \
+           golang.org/x/tools/cmd/stringer \
+           github.com/google/certificate-transparency-go \
+           github.com/alecthomas/gometalinter \
+           github.com/golang/{mock/mockgen,protobuf/protoc-gen-go}
   - mkdir ../protoc
   - |
     (
@@ -52,16 +59,7 @@ install:
       unzip "protoc-3.5.1-${TRAVIS_OS_NAME}-x86_64.zip"
     )
   - export PATH="$(pwd)/../protoc/bin:$PATH"
-  # googleapis is not Go code, but it's required for .pb.go regeneration because of API dependencies.
-  - git clone --depth=1 https://github.com/googleapis/googleapis.git "$GOPATH/src/github.com/googleapis/googleapis"
-  - go get ${GOFLAGS} -d -t ./...
-  - go get github.com/golang/protobuf/proto
-  - go get github.com/golang/protobuf/protoc-gen-go
-  - go get golang.org/x/tools/cmd/stringer
-  - go get github.com/google/certificate-transparency-go
-  - go get -d -t github.com/google/certificate-transparency-go/...
-  - go install github.com/golang/{mock/mockgen,protobuf/protoc-gen-go}
-  - go get github.com/alecthomas/gometalinter
+  - go get ${GOFLAGS} -d -t ./... github.com/google/certificate-transparency-go/...
   - gometalinter --install
 
 before_script:
