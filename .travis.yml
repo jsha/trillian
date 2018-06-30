@@ -54,10 +54,10 @@ install:
   - go get github.com/alecthomas/gometalinter
   - gometalinter --install
   # install vendored protoc-gen-grpc-gateway binary
-  - go install ./tooldeps/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+  - go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
   # install vendored etcd binary
-  - go install ./tooldeps/github.com/coreos/etcd/cmd/etcd
-  - go install ./tooldeps/github.com/coreos/etcd/cmd/etcdctl
+  - go install github.com/coreos/etcd/cmd/etcd
+  - go install github.com/coreos/etcd/cmd/etcdctl
 
 
 before_script:
