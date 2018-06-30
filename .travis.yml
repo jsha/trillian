@@ -38,8 +38,8 @@ install:
   # known to work with Trillian. We use git first because it makes it easy to
   # check out a specific tag, and then use `go get` to install the binary
   # because it handles transitively fetching dependencies.
-  - git clone -b v1.3 https://github.com/grpc-ecosystem/grpc-gateway ${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway
-  - git clone -b v3.3.7 https://github.com/coreos/etcd.git "$GOPATH/src/github.com/coreos/etcd"
+  - git clone -b v1.3 https://github.com/grpc-ecosystem/grpc-gateway "${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway"
+  - git clone -b v3.3.7 https://github.com/coreos/etcd.git "${GOPATH}/src/github.com/coreos/etcd"
   # googleapis is not Go code, but it's required for .pb.go regeneration because of API dependencies.
   - git clone --depth=1 https://github.com/googleapis/googleapis.git "$GOPATH/src/github.com/googleapis/googleapis"
   - |
