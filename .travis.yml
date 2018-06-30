@@ -20,11 +20,7 @@ go:
 go_import_path: github.com/google/trillian
 
 env:
-  - GCE_CI=${ENABLE_GCE_CI} WITH_COVERAGE=true
   - GOFLAGS='-race'
-  - GOFLAGS='-race --tags batched_queue'
-  - GOFLAGS='-race' WITH_ETCD=true
-  - GOFLAGS='-race --tags pkcs11' WITH_PKCS11=true
 
 matrix:
   fast_finish: true
@@ -34,6 +30,14 @@ services:
   - docker
 
 install:
+  # Install specific versions of protoc-gen-grpc-gateway, etcd, and etcdctl
+  # known to work with Trillian.
+  - git clone -b v1.3 https://github.com/grpc-ecosystem/grpc-gateway ${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway
+  - go install ./vendor/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+  - git clone -b v3.3.7 https://github.com/coreos/etcd.git "$GOPATH/src/github.com/coreos/etcd"
+  - go install github.com/coreos/etcd/cmd/etcd
+  - go install github.com/coreos/etcd/cmd/etcdctl
+
   - mkdir ../protoc
   - |
     (
@@ -53,12 +57,6 @@ install:
   - go install github.com/golang/{mock/mockgen,protobuf/protoc-gen-go}
   - go get github.com/alecthomas/gometalinter
   - gometalinter --install
-  # install vendored protoc-gen-grpc-gateway binary
-  - go install ./vendor/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-  # install vendored etcd binary
-  - go install ./vendor/github.com/coreos/etcd/cmd/etcd
-  - go install ./vendor/github.com/coreos/etcd/cmd/etcdctl
-
 
 before_script:
   - |
