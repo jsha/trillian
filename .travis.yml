@@ -33,10 +33,10 @@ install:
   # Install specific versions of protoc-gen-grpc-gateway, etcd, and etcdctl
   # known to work with Trillian.
   - git clone -b v1.3 https://github.com/grpc-ecosystem/grpc-gateway ${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway
-  - go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
+  - go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
   - git clone -b v3.3.7 https://github.com/coreos/etcd.git "$GOPATH/src/github.com/coreos/etcd"
-  - go install github.com/coreos/etcd/cmd/etcd
-  - go install github.com/coreos/etcd/cmd/etcdctl
+  - go get github.com/coreos/etcd/cmd/etcd
+  - go get github.com/coreos/etcd/cmd/etcdctl
 
   - mkdir ../protoc
   - |
